@@ -5,11 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.util.UUID;
 
-@Entity
+//@Entity
 public class Order {
 
-    @Id
-    @GeneratedValue
+   // @Id
+    //@GeneratedValue
     private UUID orderId;
     private String gsm;
     private Sandwich sandwich;

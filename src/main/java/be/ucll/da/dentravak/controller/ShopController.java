@@ -1,5 +1,6 @@
 package be.ucll.da.dentravak.controller;
 
+//import be.ucll.da.dentravak.model.db.OrderRepository;
 import be.ucll.da.dentravak.model.db.SandwichRepository;
 import be.ucll.da.dentravak.model.domain.Bread;
 import be.ucll.da.dentravak.model.domain.Order;
@@ -11,35 +12,45 @@ import java.util.List;
 @RestController
 public class ShopController {
 
-        SandwichRepository serv ;
+        private SandwichRepository sandwichService ;
+        //private OrderRepository orderService;
 
-        ShopController(SandwichRepository repository){
-            this.serv = repository;
+        public ShopController(SandwichRepository sandwichService){ //OrderRepository orderService
+            this.sandwichService = sandwichService;
+            //this.orderService = orderService;
             Sandwich s = new Sandwich("smos", 3.6, "hesp, kaas, groentjes");
-            serv.save(s);
+            Order o = new Order("049581245", s, Bread.TurkishBread);
+            sandwichService.save(s);
+            //orderService.save(o);
         }
         @GetMapping("/sandwich")
         public Iterable<Sandwich> getSandwich() {
-            return serv.findAll();
+            return sandwichService.findAll();
+        }
+/*
+        @GetMapping("/order")
+        public Iterable<Order> getOrder(){
+            return orderService.findAll();
         }
 
-        @GetMapping("/order")
-        public Order getOrder(){
-            Sandwich s = new Sandwich("smos", 3.6, "hesp, kaas, groentjes");
-            Order o = new Order("049581245", s, Bread.TurkishBread);
-            return o;
+        @PostMapping("/postOrder")
+        public Order postOrder(@RequestBody Order newOrder){
+            return orderService.save(newOrder);
         }
+        */
         @PostMapping("/postSandwich")
-        public Sandwich postSandwich(@RequestBody Sandwich newSandwich, @PathVariable String name){
-            for (Sandwich s : serv.findAll()){
+        public Sandwich postSandwich(@RequestBody Sandwich newSandwich){ //, @PathVariable String name
+            /*
+            for (Sandwich s : sandwichService.findAll()){
                 if(s.getName().equals(name)) {
                     s.setName(newSandwich.getName());
                     s.setPrice(newSandwich.getPrice());
                     s.setIngredients(newSandwich.getIngredients());
-                    return serv.save(s);
+                    return sandwichService.save(s);
                 }
             }
-            newSandwich.setName(name);
-            return serv.save(newSandwich);
+            */
+            //newSandwich.setName(name);
+            return sandwichService.save(newSandwich);
         }
 }
