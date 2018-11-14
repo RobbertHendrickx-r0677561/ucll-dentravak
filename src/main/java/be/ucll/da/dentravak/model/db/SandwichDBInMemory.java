@@ -5,6 +5,9 @@ import be.ucll.da.dentravak.model.domain.Sandwich;
 import java.util.List;
 
 public class SandwichDBInMemory implements SandwichDB {
+
+    public SandwichDBInMemory() {}
+
     public Sandwich getSandwich(String name) {
         return null;
     }

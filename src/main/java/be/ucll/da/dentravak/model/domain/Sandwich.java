@@ -1,23 +1,33 @@
 package be.ucll.da.dentravak.model.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.UUID;
 
+@Entity
 public class Sandwich {
+
+    @Id
+    @GeneratedValue
     private UUID id;
     private String name;
     private double price;
-    private List<Ingredient> ingredients;
+    private String ingredients;
+    //private List<Ingredient> ingredients;
     private boolean vegetarian;
 
-
-    public Sandwich(String name, double price, List<Ingredient> ingredients) {
-        this.name = name;
-        this.price = price;
-        this.ingredients = ingredients;
-        setVegetarian();
+    public Sandwich(){}
+    public Sandwich(String name, double price, String ingredients) {
+        setId(id);
+        setName(name);
+        setPrice(price);
+        setIngredients(ingredients);
+        //setVegetarian();
     }
-
+/*
     public boolean isVegetarian(){
         for (Ingredient ing: ingredients) {
             if(!ing.getVegetarian()){
@@ -25,6 +35,14 @@ public class Sandwich {
             }
         }
         return true;
+    }
+*/
+    public String getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(String ingredients) {
+        this.ingredients = ingredients;
     }
 
     public UUID getId() {
@@ -51,6 +69,7 @@ public class Sandwich {
         this.price = price;
     }
 
+    /*
     public List<Ingredient> getIngredients() {
         return ingredients;
     }
@@ -69,4 +88,5 @@ public class Sandwich {
         }
         this.vegetarian = false;
     }
+    */
 }
