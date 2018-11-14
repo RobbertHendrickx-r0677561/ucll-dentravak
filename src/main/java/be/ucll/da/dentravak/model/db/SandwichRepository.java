@@ -11,9 +11,8 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 import java.util.Optional;
 
-
-@RepositoryRestResource(collectionResourceRel = "sandwichlist", path = "sandwichlist")
+//@RepositoryRestResource(collectionResourceRel = "sandwichlist", path = "sandwichlist")
 public interface SandwichRepository extends PagingAndSortingRepository<Sandwich, Long> {
 
-    List<Sandwich> findByName(@Param("name") String name);
+    //List<Sandwich> findByName(@Param("name") String name);
 }
