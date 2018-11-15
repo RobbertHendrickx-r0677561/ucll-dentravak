@@ -1,4 +1,4 @@
-
+/*
 package be.ucll.da.dentravak.controller;
 
 import be.ucll.da.dentravak.model.db.OrderRepository;
@@ -35,3 +35,4 @@ public class OrdersController {
     }
 
 }
+*/
