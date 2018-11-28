@@ -1,47 +1,21 @@
 package be.ucll.da.dentravak.model.domain;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
 public class Sandwich {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private UUID id;
     private String name;
-    private double price;
     private String ingredients;
-    //private List<Ingredient> ingredients;
-    private boolean vegetarian;
-
-    public Sandwich(){}
-    public Sandwich(String name, double price, String ingredients) {
-        setId(id);
-        setName(name);
-        setPrice(price);
-        setIngredients(ingredients);
-        //setVegetarian();
-    }
-/*
-    public boolean isVegetarian(){
-        for (Ingredient ing: ingredients) {
-            if(!ing.getVegetarian()){
-                return false;
-            }
-        }
-        return true;
-    }
-*/
-    public String getIngredients() {
-        return ingredients;
-    }
-
-    public void setIngredients(String ingredients) {
-        this.ingredients = ingredients;
-    }
+    private BigDecimal price;
 
     public UUID getId() {
         return id;
@@ -59,32 +33,21 @@ public class Sandwich {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    /*
-    public List<Ingredient> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void addIngredient(Ingredient ing){
-        ingredients.add(ing);
-    }
-
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void setVegetarian() {
-        if(isVegetarian()){
-            this.vegetarian = true;
-        }
-        this.vegetarian = false;
+    public BigDecimal getPrice() {
+        return price;
     }
-    */
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+
 }

@@ -1,3 +1,4 @@
+/*
 package be.ucll.da.dentravak.controller;
 
 import be.ucll.da.dentravak.model.db.OrderRepository;
@@ -8,6 +9,7 @@ import be.ucll.da.dentravak.model.domain.Sandwich;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
@@ -31,8 +33,8 @@ public class SandwichController {
             sandwichService.save(s2);
 
             this.orderService = orderService;
-            Orders o1 = new Orders("049581245", s2.getId(), Bread.Botterhammekes);
-            Orders o2 = new Orders("049581245", s.getId(), Bread.TurkishBread);
+            Orders o1 = new Orders( s2.getId(), "boulet", "Botterhammekes", 4.6, "049581245");
+            Orders o2 = new Orders(s.getId(), "smos", "TurkishBread", 3.6, "049581245");
             orderService.save(o1);
             orderService.save(o2);
         }
@@ -81,11 +83,12 @@ public class SandwichController {
         }
 
         @GetMapping("/orders")
-        public Iterable<Orders> getOrderByDate(@RequestParam("date") Date date){
-            //@RequestParam(value = "date", required = false) Date dateOrNull);
-            return orderService.findByDate(date);
+        public Iterable<Orders> getOrdersByDate(@RequestParam(value = "date", required = false) String dateText){
+            System.out.println(dateText);
+            //LocalDateTime date = LocalDateTime.parse(dateText);
+            //return orderService.findByDate(dateText);
+            return orderService.findAll();
         }
-
         @GetMapping("/order")
         public Iterable<Orders> getOrder(){
             return orderService.findAll();
@@ -100,5 +103,41 @@ public class SandwichController {
         return orderService.save(newOrder);
     }
 
+
+}
+*/
+
+package be.ucll.da.dentravak.controller;
+
+import be.ucll.da.dentravak.model.db.SandwichRepository;
+import be.ucll.da.dentravak.model.domain.Sandwich;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
+import java.util.UUID;
+
+@RestController
+public class SandwichController {
+
+    private SandwichRepository repository;
+
+    public SandwichController(SandwichRepository repository) {
+        this.repository = repository;
+    }
+
+    @RequestMapping("/sandwiches")
+    public Iterable<Sandwich> sandwiches() {
+        return repository.findAll();
+    }
+
+    @RequestMapping(value = "/sandwiches", method = RequestMethod.POST)
+    public Sandwich createSandwich(@RequestBody Sandwich sandwich) {
+        return repository.save(sandwich);
+    }
+
+    @RequestMapping("/sandwiches/{id}")
+    public Optional<Sandwich> getSandwich(@PathVariable UUID id) {
+        return repository.findById(id);
+    }
 
 }

@@ -1,58 +1,37 @@
 package be.ucll.da.dentravak.model.domain;
 
-import javax.persistence.*;
-import java.time.LocalDate;
+import be.ucll.da.dentravak.model.domain.Bread;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 public class Orders {
+    public enum Bread {
+        TURKISHBREAD, WRAP, BOTERHAMMEKES;
+    }
 
     @Id
-    @GeneratedValue
-    private UUID orderId;
-    private String gsm;
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private UUID id;
     private UUID sandwichId;
-    private Bread bread;
     private String name;
-    private double price;
-    private LocalDateTime date;
+    private Bread breadType;
+    private LocalDateTime creationDate;
+    private BigDecimal price;
+    private String mobilePhoneNumber;
 
-
-    public Orders(){
-        setDate();
+    public UUID getId() {
+        return id;
     }
 
-    public Orders(String gsm, UUID sandwich, Bread bread) {
-        setOrderId(orderId);
-        setGsm(gsm);
-        setBread(bread);
-        setSandwichId(sandwich);
-        setDate();
-    }
-
-    public String getGsm() {
-        return gsm;
-    }
-
-    public void setGsm(String gsm) {
-        this.gsm = gsm;
-    }
-
-    public UUID getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(UUID orderId) {
-        this.orderId = orderId;
-    }
-
-    public Bread getBread() {
-        return bread;
-    }
-
-    public void setBread(Bread bread) {
-        this.bread = bread;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getSandwichId() {
@@ -71,19 +50,35 @@ public class Orders {
         this.name = name;
     }
 
-    public double getPrice() {
+    public Bread getBreadType() {
+        return breadType;
+    }
+
+    public void setBreadType(Bread breadType) {
+        this.breadType = breadType;
+    }
+
+    public LocalDateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public String getMobilePhoneNumber() {
+        return mobilePhoneNumber;
     }
 
-    public void setDate() {
-        this.date = LocalDateTime.now();
+    public void setMobilePhoneNumber(String mobilePhoneNumber) {
+        this.mobilePhoneNumber = mobilePhoneNumber;
     }
 }
