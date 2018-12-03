@@ -18,7 +18,7 @@ public class SandwichOrderController {
         this.repository = repository;
     }
 
-    @RequestMapping("/orders")
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public Iterable<SandwichOrder> orders() {
         return repository.findAll();
     }

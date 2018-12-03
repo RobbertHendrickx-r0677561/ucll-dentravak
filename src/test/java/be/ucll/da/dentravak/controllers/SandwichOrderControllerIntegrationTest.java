@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static be.ucll.da.dentravak.model.SandwichOrderTestBuilder.aSandwichOrder;
+import static be.ucll.da.dentravak.model.SandwichTestBuilder.aSandwich;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
 @RunWith(SpringRunner.class)
@@ -54,7 +55,19 @@ public class SandwichOrderControllerIntegrationTest extends AbstractControllerIn
 
     @Test
     public void testGetSandwichOrders_WithOrdersSaved_ReturnsListWithOrders() throws JSONException {
-        throw new RuntimeException("Implement this test and then the production code");
+        Sandwich sandwich1 = aSandwich().withName("Americain").withIngredients("Vlees").withPrice(4.0).build();
+        Sandwich sandwich2 = aSandwich().withName("Smos").withIngredients("hesp, kaas, groentjes").withPrice(3.6).build();
+        sandwichRepository.save(sandwich1);
+        sandwichRepository.save(sandwich2);
+        SandwichOrder o1 = aSandwichOrder().forSandwich(sandwich1).withBreadType(SandwichOrder.BreadType.WRAP).withMobilePhoneNumber("0487/123456").build();
+        SandwichOrder o2 = aSandwichOrder().forSandwich(sandwich2).withBreadType(SandwichOrder.BreadType.BOTERHAMMEKES).withMobilePhoneNumber("0478/123456").build();
+        String post1 = httpPost("/orders", o1);
+        String post2 = httpPost("/orders", o2);
+        String actualOrdersAsJson = httpGet("/orders");
+        String expectedOrders = "[{\"id\":\"${json-unit.ignore}\",\"sandwichId\":\"" + sandwich1.getId() + "\",\"name\":\"Americain\",\"breadType\":\"WRAP\",\"creationDate\":\"${json-unit.ignore}\",\"price\":4.0,\"mobilePhoneNumber\":\"0487/123456\"}," +
+                "{\"id\":\"${json-unit.ignore}\",\"sandwichId\":\"" + sandwich2.getId() + "\",\"name\":\"Smos\",\"breadType\":\"BOTERHAMMEKES\",\"creationDate\":\"${json-unit.ignore}\",\"price\":3.6,\"mobilePhoneNumber\":\"0478/123456\"}]";
+
+        assertThatJson(actualOrdersAsJson).isEqualTo(expectedOrders);
     }
 
 }

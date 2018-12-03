@@ -20,6 +20,15 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
 
     orderSandwich() {
         //todo: call backend via fetch api
+        fetch('http://localhost:8080/orders', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify(this.sandwich)
+        })
+        .then(Request => Request.json())
+        .then(response => response.json());
         this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
     }
 
