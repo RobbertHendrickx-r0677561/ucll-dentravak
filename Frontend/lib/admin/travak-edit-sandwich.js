@@ -22,12 +22,16 @@ class DenTravakEditSandwich extends DenTravakAbstractElement {
         fetch('http://localhost:8080/orders', {
             method: "POST",
             headers: {
-                "Content-Type": "application/json; charset=utf-8",
+                "Content-Type": "application/json;",
             },
             body: JSON.stringify(this.sandwich)
         })
-        .then(Request => Request.json())
-        .then(response => response.json());
+        .then(function (data) {  
+            console.log('Request success: ', data);  
+         })  
+        .catch(function (error) {  
+            console.log('Request failure: ', error);  
+        });
         this.app().dispatchEvent(new CustomEvent('save-succeeded', {detail: this.sandwich}));
     }
 

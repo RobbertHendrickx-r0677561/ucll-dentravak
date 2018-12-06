@@ -20,16 +20,40 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
 
     orderSandwich() {
         //todo: call backend via fetch api
+        console.log("sommething" + this.getOrder());
+
+        console.log(this.sandwich.sandwichId);
+        
         fetch('http://localhost:8080/orders', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify(this.sandwich)
+            body: JSON.stringify(this.getOrder())
         })
-        .then(Request => Request.json())
-        .then(response => response.json());
+        .then(function (data) {  
+            console.log('Request success: ', data);  
+         })  
+        .catch(function (error) {  
+            console.log('Request failure: ', error);  
+        });
         this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
+    }
+
+    getOrder(){
+        //var breadType = document.querySelector('input[name=typeBrood]:checked').value;
+        //var breadType = "WRAP";
+        //var number = document.getElementById('mobile-phone-number').Value();
+        //var number = "0487/12 34 56";
+        //var id = "833758b0-1b06-4eee-9fe3-2360812dbb66";
+        //return "{\"sandwichId\": \"" + id + "\", \"name\": \"" + this.sandwich.name + "\", \"breadType\": \"" + breadType + "\", \"price\": " + this.sandwich.price + ", \"mobilePhoneNumber\": \"" + number + "\"}";
+        return "{" +
+            "\"sandwichId\": \"aa4d0f62-4712-4dcb-a1c4-a28f8ba46ef5\"," +
+            "\"name\": \"Smos\"," +
+            "\"breadType\": \"WRAP\","+
+            "\"price\": 3.60,"+
+            "\"mobilePhoneNumber\": \"0487\/123456\""+
+        "}";
     }
 
     get template() {
@@ -60,19 +84,19 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
                 <div class="form-group">
                     <label for="typeBrood"><h4>Kies het type brood</h4></label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="typeBrood" id="radioBoterhammekes" value="option1">
+                        <input class="form-check-input" type="radio" name="typeBrood" id="radioBoterhammekes" value="BOTERHAMMEKES">
                         <label class="form-check-label" for="radioBoterhammekes">
                             Boterhammekes
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="typeBrood" id="radioWrap" value="option2">
+                        <input class="form-check-input" type="radio" name="typeBrood" id="radioWrap" value="WRAP">
                         <label class="form-check-label" for="radioWrap">
                             Wrap
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="typeBrood" id="radioTurksBrood" value="option3">
+                        <input class="form-check-input" type="radio" name="typeBrood" id="radioTurksBrood" value="TURKS_BREAD">
                         <label class="form-check-label" for="radioTurksBrood">
                             Turks brood
                         </label>

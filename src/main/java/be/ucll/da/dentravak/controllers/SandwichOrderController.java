@@ -1,7 +1,9 @@
 package be.ucll.da.dentravak.controllers;
 
+import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichOrder;
 import be.ucll.da.dentravak.repositories.SandwichOrderRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +28,10 @@ public class SandwichOrderController {
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public SandwichOrder createSandwichOrder(@RequestBody SandwichOrder sandwichOrder) {
         sandwichOrder.setCreationDate(LocalDateTime.now());
-        return repository.save(sandwichOrder);
+        //Sandwich s11 = new ObjectMapper().readValue(sandwichOrder, SandwichOrder.class);
+        SandwichOrder o1 = repository.save(sandwichOrder);
+        System.out.println(" ---------   aangesproken)    ----------" + repository.count());
+        return o1;
     }
 
 
