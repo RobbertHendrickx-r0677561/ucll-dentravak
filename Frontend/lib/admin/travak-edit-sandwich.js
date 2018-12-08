@@ -19,19 +19,22 @@ class DenTravakEditSandwich extends DenTravakAbstractElement {
 
     saveSandwich() {
         //todo: call backend via fetch api and save sandwich
-        fetch('http://localhost:8080/orders', {
-            method: "POST",
+        var id = this.sandwich.id;
+ 		let sandwich = {};
+		if (id){
+		    sandwich.id = id;
+		}
+        sandwich.name =   this.byId('name').value
+        sandwich.ingredients =   this.byId('ingredients').value
+        sandwich.price =   this.byId('price').value
+
+        fetch('http://localhost:8080/sandwiches', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json;",
+                "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify(this.sandwich)
+            body: JSON.stringify(sandwich),
         })
-        .then(function (data) {  
-            console.log('Request success: ', data);  
-         })  
-        .catch(function (error) {  
-            console.log('Request failure: ', error);  
-        });
         this.app().dispatchEvent(new CustomEvent('save-succeeded', {detail: this.sandwich}));
     }
 

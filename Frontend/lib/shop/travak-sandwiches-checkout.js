@@ -19,41 +19,29 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
     }
 
     orderSandwich() {
-        //todo: call backend via fetch api
-        console.log("sommething" + this.getOrder());
-
-        console.log(this.sandwich.sandwichId);
+        let order = {};
+        order.sandwichId = this.sandwich.id;
+        order.name = this.sandwich.name;
+        console.log(order.name + order.sandwichId);
+        order.price = this.sandwich.price;
+        console.log(this.byCss('input[name="typeBrood"]:checked').value);
+        order.breadType = this.byCss('input[name="typeBrood"]:checked').value;
+        order.mobilePhoneNumber = this.byCss('input[id="mobile-phone-number"]').value;
         
         fetch('http://localhost:8080/orders', {
-            method: "POST",
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
             },
-            body: JSON.stringify(this.getOrder())
+            body: JSON.stringify(order),
         })
-        .then(function (data) {  
-            console.log('Request success: ', data);  
-         })  
-        .catch(function (error) {  
-            console.log('Request failure: ', error);  
-        });
-        this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
-    }
+        //then doen met Response.status is 200
+        .then((response) => {
+            if(!response.ok) throw new Error(response.status);
+            else this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
 
-    getOrder(){
-        //var breadType = document.querySelector('input[name=typeBrood]:checked').value;
-        //var breadType = "WRAP";
-        //var number = document.getElementById('mobile-phone-number').Value();
-        //var number = "0487/12 34 56";
-        //var id = "833758b0-1b06-4eee-9fe3-2360812dbb66";
-        //return "{\"sandwichId\": \"" + id + "\", \"name\": \"" + this.sandwich.name + "\", \"breadType\": \"" + breadType + "\", \"price\": " + this.sandwich.price + ", \"mobilePhoneNumber\": \"" + number + "\"}";
-        return "{" +
-            "\"sandwichId\": \"aa4d0f62-4712-4dcb-a1c4-a28f8ba46ef5\"," +
-            "\"name\": \"Smos\"," +
-            "\"breadType\": \"WRAP\","+
-            "\"price\": 3.60,"+
-            "\"mobilePhoneNumber\": \"0487\/123456\""+
-        "}";
+          })
+       // this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
     }
 
     get template() {
@@ -96,7 +84,7 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="typeBrood" id="radioTurksBrood" value="TURKS_BREAD">
+                        <input class="form-check-input" type="radio" name="typeBrood" id="radioTurksBrood" value="TURKS_BROOD">
                         <label class="form-check-label" for="radioTurksBrood">
                             Turks brood
                         </label>
