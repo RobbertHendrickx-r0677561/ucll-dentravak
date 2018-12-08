@@ -36,19 +36,6 @@ public class SandwichController {
     @RequestMapping(value = "/sandwiches/{id}", method = RequestMethod.PUT)
     public Sandwich updateSandwich(@PathVariable UUID id, @RequestBody Sandwich sandwich) {
         if(!(sandwich.getId().equals(id))) throw new IllegalArgumentException("trying to hack?");
-/*
-        Sandwich s2 = new Sandwich();
-        for (Sandwich s : repository.findAll()){
-            if(s.getId().equals(id)) {
-                //s.setId(UUID.randomUUID());
-                s.setName(sandwich.getName());
-                s.setPrice(sandwich.getPrice());
-                s.setIngredients(sandwich.getIngredients());
-                s2 = s;
-                return repository.save(s);
-            }
-        }
-        return s2;*/
         return repository.save(sandwich);
     }
 }

@@ -28,10 +28,7 @@ public class SandwichOrderController {
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
     public SandwichOrder createSandwichOrder(@RequestBody SandwichOrder sandwichOrder) {
         sandwichOrder.setCreationDate(LocalDateTime.now());
-        //Sandwich s11 = new ObjectMapper().readValue(sandwichOrder, SandwichOrder.class);
-        SandwichOrder o1 = repository.save(sandwichOrder);
-        System.out.println(" ---------   aangesproken)    ----------" + repository.count());
-        return o1;
+        return repository.save(sandwichOrder);
     }
 
 
