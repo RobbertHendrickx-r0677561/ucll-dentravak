@@ -23,8 +23,8 @@ class DenTravakSandwichesOrderConfirmation extends DenTravakAbstractElement {
                 recommendedItem.rating = scoreBtn.dataset.score;
 
                 console.log(recommendedItem)
-                
-                fetch('http://localhost:8080/recommend/', {
+
+                fetch('http://localhost:8081/recommend/', {
                     method: "POST", // *GET, POST, PUT, DELETE, etc.
                     mode: "cors", // no-cors, cors, *same-origin
                     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
