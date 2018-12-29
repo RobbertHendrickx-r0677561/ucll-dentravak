@@ -32,7 +32,7 @@ services:
     depends_on:
       - consul
     ports:
-      - 8123:8081
+      - 8234:8081
     labels:
       - "traefik.port=8081"
       - "traefik.frontend.rule=PathPrefix:/recommendation/"
