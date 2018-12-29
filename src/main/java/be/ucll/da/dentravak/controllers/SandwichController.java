@@ -39,7 +39,7 @@ public class SandwichController {
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
         try {
-            SandwichPreferences preferences = getPreferences("0487123456");
+            SandwichPreferences preferences = getPreferences("0412345678");
             Iterable<Sandwich> allSandwiches = repository.findAll();
             ArrayList<Sandwich> sandwiches = new ArrayList<>();
             for (Sandwich s : allSandwiches) {
