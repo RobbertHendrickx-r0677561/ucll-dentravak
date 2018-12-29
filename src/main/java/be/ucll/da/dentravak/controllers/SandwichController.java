@@ -5,11 +5,13 @@ import be.ucll.da.dentravak.model.SandwichPreferences;
 import be.ucll.da.dentravak.repositories.SandwichRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 //import javax.inject.Inject;
+import javax.inject.Inject;
 import javax.naming.ServiceUnavailableException;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -19,20 +21,21 @@ import java.util.*;
 @RestController
 public class SandwichController {
 
-    //@Inject
-    //private DiscoveryClient discoveryClient;
+    @Inject
+    private DiscoveryClient discoveryClient;
 
-    //@Inject
+    @Inject
     private SandwichRepository repository;
 
-  //  @Inject
+    //@Inject
     private RestTemplate restTemplate;
     //private SandwichRepository repository;
 
+    /*
     public SandwichController(SandwichRepository repository) {
         this.repository = repository;
     }
-
+*/
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
         try {
@@ -122,7 +125,7 @@ public class SandwichController {
                 .getForEntity(service, SandwichPreferences.class)
                 .getBody();
     }
-
+/*
     public Optional<URI> recommendationServiceUrl() {
         try {
             return Optional.of(new URI("http://localhost:8081"));
@@ -131,12 +134,12 @@ public class SandwichController {
         }
 
     }
-
-//    public Optional<URI> recommendationServiceUrl() {
-//        return discoveryClient.getInstances("recommendation")
-//                .stream()
-//                .map(si -> si.getUri())
-//                .findFirst();
-  //  }
+*/
+    public Optional<URI> recommendationServiceUrl() {
+       return discoveryClient.getInstances("recommendation")
+               .stream()
+                .map(si -> si.getUri())
+                .findFirst();
+    }
 }
 
