@@ -22,12 +22,11 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
         let order = {};
         order.sandwichId = this.sandwich.id;
         order.name = this.sandwich.name;
-        console.log(order.name + order.sandwichId);
         order.price = this.sandwich.price;
-        console.log(this.byCss('input[name="typeBrood"]:checked').value);
         order.breadType = this.byCss('input[name="typeBrood"]:checked').value;
         order.mobilePhoneNumber = this.byCss('input[id="mobile-phone-number"]').value;
-        
+        console.log(JSON.stringify(order))
+
         fetch('http://localhost:8080/orders', {
             method: 'POST',
             headers: {
@@ -38,7 +37,7 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
         //then doen met Response.status is 200
         .then((response) => {
             if(!response.ok) throw new Error(response.status);
-            else this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
+            else this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: order}));
 
           })
        // this.app().dispatchEvent(new CustomEvent('order-succeeded', {detail: this.sandwich}));
@@ -92,7 +91,7 @@ class DenTravakSandwichesCheckout extends DenTravakAbstractElement {
                 </div>
                 <div class="form-group">
                     <label for="mobile-phone-number"><h4>Je GSM Nummer</h4></label>
-                    <input type="text" class="form-control" id="mobile-phone-number" placeholder="0487/12 34 56">
+                    <input type="text" class="form-control" id="mobile-phone-number" placeholder="0487123456">
                 </div>
 
                 <button id="order-button" class="btn btn-primary active">Bestellen</button>
