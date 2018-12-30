@@ -17,7 +17,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-@EnableDiscoveryClient
+
+import static org.hibernate.internal.util.collections.ArrayHelper.toList;
+
 @RestController
 public class SandwichController {
 
@@ -27,25 +29,14 @@ public class SandwichController {
     @Inject
     private SandwichRepository repository;
 
-    //@Inject
+    @Inject
     private RestTemplate restTemplate;
-    //private SandwichRepository repository;
 
-    /*
-    public SandwichController(SandwichRepository repository) {
-        this.repository = repository;
-    }
-    */
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
         try {
             SandwichPreferences preferences = getPreferences("0412345678");
-            Iterable<Sandwich> allSandwiches = repository.findAll();
-            ArrayList<Sandwich> sandwiches = new ArrayList<>();
-            for (Sandwich s : allSandwiches) {
-                sandwiches.add(s);
-            };
-
+            List<Sandwich> sandwiches = toList(repository.findAll());
             Collections.sort(sandwiches, new Comparator<Sandwich>() {
                 @Override
                 public int compare(Sandwich s2, Sandwich s1)
@@ -58,31 +49,13 @@ public class SandwichController {
                     if(rating2 == null){
                         rating2 = new Float(0.00);
                     }
-                    return  rating1.compareTo(rating2);
+                    return  Float.compare(rating1, rating2);
                 }
             });
             Collections.reverse(sandwiches);
 
             return sandwiches;
-            /*
-            Map<Float, Sandwich> sortedSandwiches = new TreeMap<>();
-            for (Sandwich s : allSandwiches) {
-                Float rating = preferences.getRatingForSandwich(s.getId());
-                if(rating == null){
-                    rating = new Float(0.00);
-                    sortedSandwiches.put(rating, s);
-                }else{
-                    sortedSandwiches.put(rating, s);
-                }
-            }
-            List sortedList = new ArrayList(sortedSandwiches.values());
-                        Collections.reverse(sortedList);
-            return sortedList;
-            */
-
         } catch (ServiceUnavailableException e) {
-            return repository.findAll();
-        } catch (NullPointerException e){
             return repository.findAll();
         }
     }
@@ -97,18 +70,6 @@ public class SandwichController {
         return repository.findById(id);
     }
 
-    /*
-    List<Sandwich> getSand...()
-    SandwPref p = getP(phone);
-    List<> sa = toList(rep.findaal);
-    collections.sort(saandwiches, comparebyrating(pref));
-    return sand;
-
-    priv comparator<> comparebyrating(sanpref pref)
-        return (sand sA, sand sB,)
-
-        //sandwichcontroler testclasse maken met mockito.mock
-*/
     @RequestMapping(value = "/sandwiches/{id}", method = RequestMethod.PUT)
     public Sandwich updateSandwich(@PathVariable UUID id, @RequestBody Sandwich sandwich) {
         if(!(sandwich.getId().equals(id))) throw new IllegalArgumentException("trying to hack?");
@@ -120,24 +81,14 @@ public class SandwichController {
         URI service = recommendationServiceUrl()
                 .map(s -> s.resolve("/recommendation/recommend/" + emailAddress))
                 .orElseThrow(ServiceUnavailableException::new);
-        System.out.println("--- called ----");
         return restTemplate
                 .getForEntity(service, SandwichPreferences.class)
                 .getBody();
     }
-/*
-    public Optional<URI> recommendationServiceUrl() {
-        try {
-            return Optional.of(new URI("http://localhost:8081"));
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
-*/
     public Optional<URI> recommendationServiceUrl() {
        return discoveryClient.getInstances("recommendation")
-               .stream()
+                .stream()
                 .map(si -> si.getUri())
                 .findFirst();
     }
