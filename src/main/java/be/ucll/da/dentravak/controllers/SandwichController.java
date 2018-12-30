@@ -4,13 +4,12 @@ import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichPreferences;
 import be.ucll.da.dentravak.repositories.SandwichRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-//import javax.inject.Inject;
 import javax.inject.Inject;
 import javax.naming.ServiceUnavailableException;
 import java.math.BigDecimal;
@@ -18,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
+@EnableDiscoveryClient
 @RestController
 public class SandwichController {
 
@@ -35,7 +35,7 @@ public class SandwichController {
     public SandwichController(SandwichRepository repository) {
         this.repository = repository;
     }
-*/
+    */
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
         try {
