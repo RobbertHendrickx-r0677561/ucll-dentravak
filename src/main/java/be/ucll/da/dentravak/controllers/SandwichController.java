@@ -17,7 +17,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
 
-
 import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
 @RestController
