@@ -39,7 +39,7 @@ public class SandwichController {
             for (Sandwich sand : s) {
                 sandwiches.add(sand);
             }
-            if(sandwiches.size() > 1){
+            if(sandwiches.size() > 1 && preferences != null){
                 Collections.sort(sandwiches, new Comparator<Sandwich>() {
                     @Override
                     public int compare(Sandwich s1, Sandwich s2)
