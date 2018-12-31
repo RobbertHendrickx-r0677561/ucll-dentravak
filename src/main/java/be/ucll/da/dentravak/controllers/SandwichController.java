@@ -34,7 +34,10 @@ public class SandwichController {
 
         try {
             SandwichPreferences preferences = getPreferences("0412345678");
-            List<Sandwich> sandwiches = toList(s);
+            List<Sandwich> sandwiches = new ArrayList<>();
+            for(Sandwich sand : s){
+                sandwiches.add(sand);
+            }
             if(preferences != null && sandwiches.size() > 1){
                 Collections.sort(sandwiches, new Comparator<Sandwich>() {
                     @Override
