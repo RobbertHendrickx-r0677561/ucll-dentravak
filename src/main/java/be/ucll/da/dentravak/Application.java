@@ -9,12 +9,18 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@EnableDiscoveryClient
+
 @SpringBootApplication
+@EnableDiscoveryClient
 public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     @Configuration
@@ -23,12 +29,7 @@ public class Application {
         @Override
         public void addCorsMappings(CorsRegistry registry) {
             registry.addMapping("/**");
-                    //.allowedOrigins("http://localhost:4200","http://localhost:8080").allowedMethods("GET","PUT","POST","DELETE","OPTIONS");
         }
 
-        @Bean
-        public RestTemplate restTemplate(){
-            return new RestTemplate();
-        }
     }
 }
