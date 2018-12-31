@@ -26,7 +26,7 @@ public class SandwichController {
     private SandwichRepository repository;
 
     //@Inject
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
