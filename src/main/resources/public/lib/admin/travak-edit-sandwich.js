@@ -28,7 +28,7 @@ class DenTravakEditSandwich extends DenTravakAbstractElement {
         sandwich.ingredients =   this.byId('ingredients').value
         sandwich.price =   this.byId('price').value
 
-        fetch('/den-travak/sandwiches', {
+        fetch('http://193.191.177.8:10218/den-travak/sandwiches', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
