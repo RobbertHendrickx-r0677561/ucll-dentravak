@@ -11,9 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
 import javax.naming.ServiceUnavailableException;
-import java.math.BigDecimal;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.*;
 
 import static org.hibernate.internal.util.collections.ArrayHelper.toList;
@@ -27,8 +25,8 @@ public class SandwichController {
     @Inject
     private SandwichRepository repository;
 
-    @Inject
-    private RestTemplate restTemplate;
+    //@Inject
+    private RestTemplate restTemplate = new RestTemplate();
 
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
