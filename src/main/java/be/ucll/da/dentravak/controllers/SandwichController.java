@@ -25,7 +25,7 @@ public class SandwichController {
     @Inject
     private SandwichRepository repository;
 
-    //@Inject
+    @Inject
     private RestTemplate restTemplate;
 
     @RequestMapping("/sandwiches")
