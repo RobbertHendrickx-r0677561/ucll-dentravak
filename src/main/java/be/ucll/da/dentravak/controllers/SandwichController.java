@@ -30,9 +30,10 @@ public class SandwichController {
 
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
-        try {
+        Iterable<Sandwich> s = repository.findAll();
+        /*try {
             SandwichPreferences preferences = getPreferences("0412345678");
-            List<Sandwich> sandwiches = toList(repository.findAll());
+            List<Sandwich> sandwiches = toList(s);
             Collections.sort(sandwiches, new Comparator<Sandwich>() {
                 @Override
                 public int compare(Sandwich s2, Sandwich s1)
@@ -50,10 +51,11 @@ public class SandwichController {
             });
             Collections.reverse(sandwiches);
 
-            return sandwiches;
+            s = sandwiches;
         } catch (ServiceUnavailableException e) {
             return repository.findAll();
-        }
+        }*/
+        return s;
     }
 
     @RequestMapping(value = "/sandwiches", method = RequestMethod.POST)
