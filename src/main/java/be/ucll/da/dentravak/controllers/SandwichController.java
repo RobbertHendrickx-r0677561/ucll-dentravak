@@ -30,40 +30,41 @@ public class SandwichController {
 
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
-        Iterable<Sandwich> s = repository.findAll();
 
         try {
             SandwichPreferences preferences = getPreferences("0412345678");
+            Iterable<Sandwich> allSandwiches = repository.findAll();
             List<Sandwich> sandwiches = new ArrayList<>();
-            for(Sandwich sand : s){
-                sandwiches.add(sand);
-            }
-            if(preferences != null && sandwiches.size() > 1){
-                Collections.sort(sandwiches, new Comparator<Sandwich>() {
-                    @Override
-                    public int compare(Sandwich s2, Sandwich s1)
-                    {
-                        Float rating1 = preferences.getRatingForSandwich(s1.getId());
-                        Float rating2 = preferences.getRatingForSandwich(s2.getId());
-                        if(rating1 == null){
-                            rating1 = new Float(0.00);
-                        }
-                        if(rating2 == null){
-                            rating2 = new Float(0.00);
-                        }
-                        return  Float.compare(rating1, rating2);
-                    }
-                });
-                Collections.reverse(sandwiches);
+            for (Sandwich s : allSandwiches) {
+                sandwiches.add(s);
+            };
 
-                s = sandwiches;
-            }
+            Collections.sort(sandwiches, new Comparator<Sandwich>() {
+                @Override
+                public int compare(Sandwich s1, Sandwich s2)
+                {
+                    Float rating1 = preferences.getRatingForSandwich(s1.getId());
+                    Float rating2 = preferences.getRatingForSandwich(s2.getId());
+                    if (rating1 == null) {
+                        rating1 = new Float(0.00);
+                    }
+                    if (rating2 == null) {
+                        rating2 = new Float(0.00);
+                    }
+                    //return rating1.compareTo(rating2);
+                    return (int) (rating1 - rating2);
+                }
+            });
+
+            Collections.reverse(sandwiches);
+            return sandwiches;
 
         } catch (ServiceUnavailableException e) {
             return repository.findAll();
         }
-        return s;
+
     }
+
 
     @RequestMapping(value = "/sandwiches", method = RequestMethod.POST)
     public Sandwich createSandwich(@RequestBody Sandwich sandwich) {
