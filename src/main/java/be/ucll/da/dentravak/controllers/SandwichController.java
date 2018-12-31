@@ -31,30 +31,34 @@ public class SandwichController {
     @RequestMapping("/sandwiches")
     public Iterable<Sandwich> sandwiches() {
         Iterable<Sandwich> s = repository.findAll();
-        /*try {
+
+        try {
             SandwichPreferences preferences = getPreferences("0412345678");
             List<Sandwich> sandwiches = toList(s);
-            Collections.sort(sandwiches, new Comparator<Sandwich>() {
-                @Override
-                public int compare(Sandwich s2, Sandwich s1)
-                {
-                    Float rating1 = preferences.getRatingForSandwich(s1.getId());
-                    Float rating2 = preferences.getRatingForSandwich(s2.getId());
-                    if(rating1 == null){
-                        rating1 = new Float(0.00);
+            if(preferences != null && sandwiches.size() > 1){
+                Collections.sort(sandwiches, new Comparator<Sandwich>() {
+                    @Override
+                    public int compare(Sandwich s2, Sandwich s1)
+                    {
+                        Float rating1 = preferences.getRatingForSandwich(s1.getId());
+                        Float rating2 = preferences.getRatingForSandwich(s2.getId());
+                        if(rating1 == null){
+                            rating1 = new Float(0.00);
+                        }
+                        if(rating2 == null){
+                            rating2 = new Float(0.00);
+                        }
+                        return  Float.compare(rating1, rating2);
                     }
-                    if(rating2 == null){
-                        rating2 = new Float(0.00);
-                    }
-                    return  Float.compare(rating1, rating2);
-                }
-            });
-            Collections.reverse(sandwiches);
+                });
+                Collections.reverse(sandwiches);
 
-            s = sandwiches;
+                s = sandwiches;
+            }
+
         } catch (ServiceUnavailableException e) {
             return repository.findAll();
-        }*/
+        }
         return s;
     }
 
