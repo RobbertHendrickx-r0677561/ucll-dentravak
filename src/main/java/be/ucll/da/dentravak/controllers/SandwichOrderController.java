@@ -4,11 +4,14 @@ import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichOrder;
 import be.ucll.da.dentravak.repositories.SandwichOrderRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
 @RestController
@@ -31,6 +34,45 @@ public class SandwichOrderController {
         return repository.save(sandwichOrder);
     }
 
+    @RequestMapping(value = "/download-orders", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @ResponseBody
+    public FileSystemResource ordersDownload(HttpServletResponse response) throws IOException {
+        PrintWriter pw = new PrintWriter(new File("today's-orders.csv"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("id");
+        sb.append(',');
+        sb.append("sandwichId");
+        sb.append(',');
+        sb.append("name");
+        sb.append(',');
+        sb.append("breadType");
+        sb.append(',');
+        sb.append("creationDate");
+        sb.append(',');
+        sb.append("price");
+        sb.append(',');
+        sb.append("mobilePhoneNumber");
+        sb.append('\n');
+
+        for(SandwichOrder order : repository.findAll()){
+            sb.append(order.getId());
+            sb.append(',');
+            sb.append(order.getSandwichId());
+            sb.append(',');
+            sb.append(order.getName());
+            sb.append(',');
+            sb.append(order.getBreadType().name());
+            sb.append(',');
+            sb.append(order.getCreationDate());
+            sb.append(',');
+            sb.append(order.getPrice());
+            sb.append(',');
+            sb.append(order.getMobilePhoneNumber());
+            sb.append('\n');
+        }
+        pw.write(sb.toString());
+        return new FileSystemResource("today's-orders.csv");
+    }
 
 }
 
