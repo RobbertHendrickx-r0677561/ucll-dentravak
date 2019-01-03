@@ -34,7 +34,6 @@ public class SandwichOrderController {
     }
 
     @RequestMapping(value = "/download-orders.csv", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    @ResponseBody
     public void ordersDownload(HttpServletResponse response) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("id");
@@ -69,6 +68,7 @@ public class SandwichOrderController {
             sb.append('\n');
         }
 
+        response.setContentType("text/csv");
         InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
         IOUtils.copy(inputStream, response.getOutputStream());
         response.flushBuffer();
