@@ -51,6 +51,8 @@ public class SandwichOrderController {
         sb.append("price");
         sb.append(',');
         sb.append("mobilePhoneNumber");
+        sb.append(',');
+        sb.append("printed");
         sb.append('\n');
 
         for(SandwichOrder order : repository.findAll()){
@@ -68,8 +70,11 @@ public class SandwichOrderController {
                 sb.append(order.getPrice());
                 sb.append(',');
                 sb.append(order.getMobilePhoneNumber());
+                sb.append(',');
+                sb.append(order.isPrinted());
                 sb.append('\n');
                 order.setPrinted(true);
+                repository.save(order);
             }
         }
 
