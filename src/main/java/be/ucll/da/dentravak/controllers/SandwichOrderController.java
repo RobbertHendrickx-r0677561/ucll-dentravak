@@ -54,7 +54,7 @@ public class SandwichOrderController {
         sb.append('\n');
 
         for(SandwichOrder order : repository.findAll()){
-            if(order.getCreationDate() == LocalDateTime.now() && !order.isPrinted()){
+            if(order.getCreationDate().getDayOfYear() == LocalDateTime.now().getDayOfYear() && !order.isPrinted()){
                 sb.append(order.getId());
                 sb.append(',');
                 sb.append(order.getSandwichId());
