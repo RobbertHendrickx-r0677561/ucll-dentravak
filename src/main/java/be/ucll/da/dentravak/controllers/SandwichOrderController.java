@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @RestController
 public class SandwichOrderController {
@@ -52,20 +54,23 @@ public class SandwichOrderController {
         sb.append('\n');
 
         for(SandwichOrder order : repository.findAll()){
-            sb.append(order.getId());
-            sb.append(',');
-            sb.append(order.getSandwichId());
-            sb.append(',');
-            sb.append(order.getName());
-            sb.append(',');
-            sb.append(order.getBreadType().name());
-            sb.append(',');
-            sb.append(order.getCreationDate());
-            sb.append(',');
-            sb.append(order.getPrice());
-            sb.append(',');
-            sb.append(order.getMobilePhoneNumber());
-            sb.append('\n');
+            if(order.getCreationDate() == LocalDateTime.now() && !order.isPrinted()){
+                sb.append(order.getId());
+                sb.append(',');
+                sb.append(order.getSandwichId());
+                sb.append(',');
+                sb.append(order.getName());
+                sb.append(',');
+                sb.append(order.getBreadType().name());
+                sb.append(',');
+                sb.append(order.getCreationDate());
+                sb.append(',');
+                sb.append(order.getPrice());
+                sb.append(',');
+                sb.append(order.getMobilePhoneNumber());
+                sb.append('\n');
+                order.setPrinted(true);
+            }
         }
 
         response.setContentType("text/csv");

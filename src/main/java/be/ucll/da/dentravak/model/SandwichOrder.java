@@ -26,6 +26,7 @@ public class SandwichOrder {
     private LocalDateTime creationDate;
     private BigDecimal price;
     private String mobilePhoneNumber;
+    private boolean printed;
 
     public UUID getId() {
         return id;
@@ -81,5 +82,13 @@ public class SandwichOrder {
 
     public void setMobilePhoneNumber(String mobilePhoneNumber) {
         this.mobilePhoneNumber = mobilePhoneNumber;
+    }
+
+    public boolean isPrinted() {
+        return printed;
+    }
+
+    public void setPrinted(boolean printed) {
+        this.printed = printed;
     }
 }

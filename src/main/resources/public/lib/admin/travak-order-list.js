@@ -75,6 +75,7 @@ class DenTravakOrderList extends DenTravakAbstractElement {
                     <p class="list-group-item-text">${order.name} - ${order.breadType.toLowerCase()}</p>
                 </div>
                 <div class="dt-order-info">
+                    <p class="list-group-item-text">${order.printed}</p>
                     <p class="list-group-item-text">${order.price}</p>
                 </div>
             </a>
