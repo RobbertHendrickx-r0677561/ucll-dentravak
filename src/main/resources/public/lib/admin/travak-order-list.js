@@ -60,6 +60,7 @@ class DenTravakOrderList extends DenTravakAbstractElement {
                 <ul id="orders" class="list-group">
                 </ul>
                 </div>
+                <button class="button" href="/download-orders.csv">Download bestellingen van vandaag</button>
             </div>
         `;
     }

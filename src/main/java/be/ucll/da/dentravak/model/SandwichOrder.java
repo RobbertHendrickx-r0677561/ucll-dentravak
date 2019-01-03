@@ -84,6 +84,10 @@ public class SandwichOrder {
         this.mobilePhoneNumber = mobilePhoneNumber;
     }
 
+    public boolean getPrinted() {
+        return printed;
+    }
+
     public boolean isPrinted() {
         return printed;
     }
