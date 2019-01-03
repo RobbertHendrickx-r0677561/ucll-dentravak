@@ -60,7 +60,7 @@ class DenTravakOrderList extends DenTravakAbstractElement {
                 <ul id="orders" class="list-group">
                 </ul>
                 </div>
-                <button class="button" href="/download-orders.csv">Download bestellingen van vandaag</button>
+                <a class="button" href="./download-orders.csv">Download bestellingen van vandaag</a>
             </div>
         `;
     }
@@ -76,7 +76,9 @@ class DenTravakOrderList extends DenTravakAbstractElement {
                     <p class="list-group-item-text">${order.name} - ${order.breadType.toLowerCase()}</p>
                 </div>
                 <div class="dt-order-info">
-                    <p class="list-group-item-text">${order.printed}</p>
+                    <p class="list-group-item-text">PRINTED=${order.printed}</p>
+                </div>
+                <div class="dt-order-info">
                     <p class="list-group-item-text">${order.price}</p>
                 </div>
             </a>
