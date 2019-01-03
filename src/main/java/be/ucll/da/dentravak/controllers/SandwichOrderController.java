@@ -4,14 +4,13 @@ import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichOrder;
 import be.ucll.da.dentravak.repositories.SandwichOrderRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 
 @RestController
@@ -36,8 +35,7 @@ public class SandwichOrderController {
 
     @RequestMapping(value = "/download-orders.csv", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
-    public FileSystemResource ordersDownload(HttpServletResponse response) throws IOException {
-        PrintWriter pw = new PrintWriter("download-orders.csv");
+    public void ordersDownload(HttpServletResponse response) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("id");
         sb.append(',');
@@ -70,8 +68,10 @@ public class SandwichOrderController {
             sb.append(order.getMobilePhoneNumber());
             sb.append('\n');
         }
-        pw.write(sb.toString());
-        return new FileSystemResource("download-orders.csv");
+
+        InputStream inputStream = new ByteArrayInputStream(sb.toString().getBytes());
+        IOUtils.copy(inputStream, response.getOutputStream());
+        response.flushBuffer();
     }
 
 }
