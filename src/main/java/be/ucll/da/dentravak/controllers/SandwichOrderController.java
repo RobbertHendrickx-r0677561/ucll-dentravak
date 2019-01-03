@@ -34,10 +34,10 @@ public class SandwichOrderController {
         return repository.save(sandwichOrder);
     }
 
-    @RequestMapping(value = "/download-orders", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+    @RequestMapping(value = "/download-orders.csv", method = RequestMethod.GET, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public FileSystemResource ordersDownload(HttpServletResponse response) throws IOException {
-        PrintWriter pw = new PrintWriter(new File("today's-orders.csv"));
+        PrintWriter pw = new PrintWriter("download-orders.csv");
         StringBuilder sb = new StringBuilder();
         sb.append("id");
         sb.append(',');
@@ -71,7 +71,7 @@ public class SandwichOrderController {
             sb.append('\n');
         }
         pw.write(sb.toString());
-        return new FileSystemResource("today's-orders.csv");
+        return new FileSystemResource("download-orders.csv");
     }
 
 }
