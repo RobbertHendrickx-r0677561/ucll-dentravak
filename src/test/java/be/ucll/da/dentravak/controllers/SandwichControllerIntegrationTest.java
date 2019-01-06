@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
@@ -42,7 +43,7 @@ public class SandwichControllerIntegrationTest extends AbstractControllerIntegra
     public void testPostSandwich() throws JSONException {
         Sandwich sandwich = aSandwich().withName("Americain").withIngredients("Vlees").withPrice(4.0).build();
 
-        String actualSandwichAsJson = httpPost("/sandwiches", sandwich);
+        String actualSandwichAsJson = httpRequest("/sandwiches", sandwich, HttpMethod.POST);
         String expectedSandwichAsJson = "{\"id\":\"${json-unit.ignore}\",\"name\":\"Americain\",\"ingredients\":\"Vlees\",\"price\":4}";
 
         assertThatJson(actualSandwichAsJson).isEqualTo(expectedSandwichAsJson);
@@ -51,13 +52,12 @@ public class SandwichControllerIntegrationTest extends AbstractControllerIntegra
     @Test
     public void testPutSandwich() throws JSONException, IOException {
         Sandwich sandwich = aSandwich().withName("Americain").withIngredients("Vlees").withPrice(4.0).build();
-        String out = httpPost("/sandwiches", sandwich);
+        String out = httpRequest("/sandwiches", sandwich, HttpMethod.POST);
         Sandwich updatedSandwich = new ObjectMapper().readValue(out, Sandwich.class);
 
         updatedSandwich.setPrice(new BigDecimal("3.2"));
 
-        String updatedSandwichAsJson = httpPut("/sandwiches/"+updatedSandwich.getId(), updatedSandwich);
-        System.out.println(updatedSandwichAsJson);
+        String updatedSandwichAsJson = httpRequest("/sandwiches/"+updatedSandwich.getId(), updatedSandwich, HttpMethod.PUT);
 
         String expectedSandwichAsJson = "{\"id\":\"${json-unit.ignore}\",\"name\":\"Americain\",\"ingredients\":\"Vlees\",\"price\":3.2}";
 
@@ -68,8 +68,8 @@ public class SandwichControllerIntegrationTest extends AbstractControllerIntegra
     public void testGetSandwiches_WithSavedSandwiches_ListWithSavedSandwich() throws JSONException {
         Sandwich sandwich1 = aSandwich().withName("Americain").withIngredients("Vlees").withPrice(4.0).build();
         Sandwich sandwich2 = aSandwich().withName("Smos").withIngredients("hesp, kaas, groentjes").withPrice(3.6).build();
-        String post1 = httpPost("/sandwiches", sandwich1);
-        String post2 = httpPost("/sandwiches", sandwich2);
+        String post1 = httpRequest("/sandwiches", sandwich1, HttpMethod.POST);
+        String post2 = httpRequest("/sandwiches", sandwich2, HttpMethod.POST);
         String actualSandwichesAsJson = httpGet("/sandwiches");
         String expectedSandwichesAsJson = "[{\"id\":\"${json-unit.ignore}\",\"name\":\"Americain\",\"ingredients\":\"Vlees\",\"price\":4.0},{\"id\":\"${json-unit.ignore}\",\"name\":\"Smos\",\"ingredients\":\"hesp, kaas, groentjes\",\"price\":3.6}]";
 

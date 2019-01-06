@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static be.ucll.da.dentravak.model.SandwichOrderTestBuilder.aSandwichOrder;
@@ -47,7 +48,7 @@ public class SandwichOrderControllerIntegrationTest extends AbstractControllerIn
     @Test
     public void testPostSandwichOrder() throws JSONException {
         SandwichOrder sandwichOrder = aSandwichOrder().forSandwich(savedSandwich).withBreadType(SandwichOrder.BreadType.BOTERHAMMEKES).withMobilePhoneNumber("0487/123456").build();
-        String actualSandwiches = httpPost("/orders", sandwichOrder);
+        String actualSandwiches = httpRequest("/orders", sandwichOrder, HttpMethod.POST);
         String expectedSandwiches = "{\"id\":\"${json-unit.ignore}\",\"sandwichId\":\"" + savedSandwich.getId() + "\",\"name\":\"Americain\",\"breadType\":\"BOTERHAMMEKES\",\"creationDate\":\"${json-unit.ignore}\",\"price\":3.5,\"mobilePhoneNumber\":\"0487/123456\"}";
 
         assertThatJson(actualSandwiches).isEqualTo(expectedSandwiches);
@@ -61,8 +62,8 @@ public class SandwichOrderControllerIntegrationTest extends AbstractControllerIn
         sandwichRepository.save(sandwich2);
         SandwichOrder o1 = aSandwichOrder().forSandwich(sandwich1).withBreadType(SandwichOrder.BreadType.WRAP).withMobilePhoneNumber("0487/123456").build();
         SandwichOrder o2 = aSandwichOrder().forSandwich(sandwich2).withBreadType(SandwichOrder.BreadType.BOTERHAMMEKES).withMobilePhoneNumber("0478/123456").build();
-        String post1 = httpPost("/orders", o1);
-        String post2 = httpPost("/orders", o2);
+        String post1 = httpRequest("/orders", o1, HttpMethod.POST);
+        String post2 = httpRequest("/orders", o2, HttpMethod.POST);
         String actualOrdersAsJson = httpGet("/orders");
         String expectedOrders = "[{\"id\":\"${json-unit.ignore}\",\"sandwichId\":\"" + sandwich1.getId() + "\",\"name\":\"Americain\",\"breadType\":\"WRAP\",\"creationDate\":\"${json-unit.ignore}\",\"price\":4.0,\"mobilePhoneNumber\":\"0487/123456\"}," +
                 "{\"id\":\"${json-unit.ignore}\",\"sandwichId\":\"" + sandwich2.getId() + "\",\"name\":\"Smos\",\"breadType\":\"BOTERHAMMEKES\",\"creationDate\":\"${json-unit.ignore}\",\"price\":3.6,\"mobilePhoneNumber\":\"0478/123456\"}]";

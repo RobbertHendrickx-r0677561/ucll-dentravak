@@ -23,9 +23,9 @@ class DenTravakSandwichesList extends DenTravakAbstractElement {
         let sandwichesList = this.byId('sandwiches');
         sandwichesList.innerHTML = ``;
         sandwiches.forEach(sandwich => {
-            let sandwichEl = htmlToElement(this.getSandwichTemplate(sandwich));
-            sandwichEl.addEventListener('click', () => this.app().dispatchEvent(new CustomEvent('edit-sandwich', {detail: sandwich})));
-            sandwichesList.appendChild(sandwichEl);
+            let sandwichl = htmlToElement(this.getSandwichTemplate(sandwich));
+            sandwichl.addEventListener('click', () => this.app().dispatchEvent(new CustomEvent('edit-sandwich', {detail: sandwich})));
+            sandwichesList.appendChild(sandwichl);
         });
     }
 

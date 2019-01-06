@@ -12,7 +12,6 @@ class DenTravakSandwichesOrderConfirmation extends DenTravakAbstractElement {
     }
 
     initEventListeners() {
-        //this.byId('rate-button').addEventListener('click', e => this.rateSandwich());
         this.byId('show-sandwich-list').addEventListener('click', e => this.app().dispatchEvent(new Event('show-sandwich-list')));
         this.shadowRoot.querySelectorAll('button.score')
             .forEach(scoreBtn => scoreBtn.addEventListener('click', e => {
@@ -25,9 +24,9 @@ class DenTravakSandwichesOrderConfirmation extends DenTravakAbstractElement {
                 console.log(recommendedItem)
 
                 fetch('/recommendation/recommend/', {
-                    method: "POST", // *GET, POST, PUT, DELETE, etc.
-                    mode: "cors", // no-cors, cors, *same-origin
-                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    method: "POST", 
+                    mode: "cors", 
+                    cache: "no-cache", 
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                     },

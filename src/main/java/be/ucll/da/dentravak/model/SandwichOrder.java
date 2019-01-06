@@ -28,71 +28,37 @@ public class SandwichOrder {
     private String mobilePhoneNumber;
     private boolean printed = false;
 
-    public UUID getId() {
-        return id;
-    }
+    public UUID getId() { return id; }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    public void setId(UUID id) { this.id = id; }
 
-    public UUID getSandwichId() {
-        return sandwichId;
-    }
+    public UUID getSandwichId() { return sandwichId; }
 
-    public void setSandwichId(UUID sandwichId) {
-        this.sandwichId = sandwichId;
-    }
+    public void setSandwichId(UUID sandwichId) { this.sandwichId = sandwichId; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public BreadType getBreadType() {
-        return breadType;
-    }
+    public BreadType getBreadType() { return breadType; }
 
-    public void setBreadType(BreadType breadType) {
-        this.breadType = breadType;
-    }
+    public void setBreadType(BreadType breadType) { this.breadType = breadType; }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
+    public LocalDateTime getCreationDate() { return creationDate; }
 
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
+    public void setCreationDate(LocalDateTime creationDate) { this.creationDate = creationDate; }
 
-    public BigDecimal getPrice() {
-        return price;
-    }
+    public BigDecimal getPrice() { return price; }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
+    public void setPrice(BigDecimal price) { this.price = price; }
 
-    public String getMobilePhoneNumber() {
-        return mobilePhoneNumber;
-    }
+    public String getMobilePhoneNumber() { return mobilePhoneNumber; }
 
-    public void setMobilePhoneNumber(String mobilePhoneNumber) {
-        this.mobilePhoneNumber = mobilePhoneNumber;
-    }
+    public void setMobilePhoneNumber(String mobilePhoneNumber) { this.mobilePhoneNumber = mobilePhoneNumber; }
 
-    public boolean getPrinted() {
-        return printed;
-    }
+    public boolean getPrinted() { return printed; }
 
-    public boolean isPrinted() {
-        return printed;
-    }
+    public boolean isPrinted() { return printed; }
 
-    public void setPrinted(boolean printed) {
-        this.printed = printed;
-    }
+    public void setPrinted(boolean printed) { this.printed = printed; }
 }

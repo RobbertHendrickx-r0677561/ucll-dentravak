@@ -3,18 +3,14 @@ package be.ucll.da.dentravak.controllers;
 import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichPreferences;
 import be.ucll.da.dentravak.repositories.SandwichRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
 import javax.inject.Inject;
 import javax.naming.ServiceUnavailableException;
 import java.net.URI;
 import java.util.*;
-
-import static org.hibernate.internal.util.collections.ArrayHelper.toList;
 
 @RestController
 public class SandwichController {
@@ -47,12 +43,11 @@ public class SandwichController {
                         Float rating1 = preferences.getRatingForSandwich(s1.getId());
                         Float rating2 = preferences.getRatingForSandwich(s2.getId());
                         if (rating1 == null) {
-                            rating1 = new Float(0.00);
+                            rating1 = new Float(0.0);
                         }
                         if (rating2 == null) {
-                            rating2 = new Float(0.00);
+                            rating2 = new Float(0.0);
                         }
-                        //return rating1.compareTo(rating2);
                         return (int) (rating1 - rating2);
                     }
                 });

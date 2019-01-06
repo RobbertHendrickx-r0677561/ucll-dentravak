@@ -1,19 +1,13 @@
 package be.ucll.da.dentravak.controllers;
 
-import be.ucll.da.dentravak.model.Sandwich;
 import be.ucll.da.dentravak.model.SandwichOrder;
 import be.ucll.da.dentravak.repositories.SandwichOrderRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
-import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @RestController
 public class SandwichOrderController {
